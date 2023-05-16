@@ -5,7 +5,7 @@ Build an LangChain app in few minutes! | 快速构建 LangChain 应用程序
 
 >&emsp;&emsp;LangChain 是一个使用LLMs构建应用程序的工具箱，包含Models、Prompts、Indexes、Memory、Chains、Agents、Callbacks等核心模块。
 
->&emsp;&emsp;Autonomous Agents（自治代理）是由人工智能驱动的程序，当给定目标时，它们能够为自己创建任务，完成任务，创建新任务，重新确定任务列表的优先级，完成新的顶级任务，循环（递归的思想）直到达到目标。
+>&emsp;&emsp;Autonomous Agents（自主代理）是由人工智能驱动的程序，当给定目标时，它们能够为自己创建任务，完成任务，创建新任务，重新确定任务列表的优先级，完成新的顶级任务，循环（递归的思想）直到达到目标。
 >大概就是你给Autonomous Agents一个任务，比如发一个关于 Autonomous Agents 最新进展的 twitter。他会先去理解分解这个任务目标，然后设定实施计划以及这几个计划的优先级，同时去辩证『冷静』的反思计划有没有漏洞，并将反思应用到执行过程中，然后就是自己不断的去换着关键词搜索总结最近的报道文章，然后是汇总、反思，看看有没有什么遗漏，最后组织成适合推文的语言自动发送。
 
 ## 工具

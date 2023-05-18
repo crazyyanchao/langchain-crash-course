@@ -13,3 +13,9 @@ def initial(env='../.env'):
 
     # OPENAI 接口用量记录工具秘钥 https://promptlayer.com
     os.environ["PROMPTLAYER_API_KEY"] = getEnv('PROMPTLAYER_KEY', env)
+
+    # Natural Language Actions: https://nla.zapier.com/get-started/
+    os.environ["ZAPIER_NLA_API_KEY"] = getEnv('ZAPIER_NLA_KEY', env)
+
+    # HuggingFace: https://huggingface.co/settings/tokens
+    os.environ["HUGGINGFACEHUB_API_TOKEN"] = getEnv('HUGGINGFACEHUB_TOKEN', env)

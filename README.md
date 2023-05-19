@@ -12,6 +12,7 @@ Build an LangChain app in few minutes! | 快速构建 LangChain 应用程序
 - [短视频脚本创作工具](tool-1)
 - [邮件助手](tool-2)
 - [自动发送邮件助手](tool-3)
+- [闲聊机器人](tool-4)
 
 ## 测试
 - [接口测试](others)

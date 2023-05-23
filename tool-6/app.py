@@ -46,6 +46,7 @@ chain = GraphCypherQAChain.from_llm(
     llm, graph=graph, qa_chain=LLMChain(llm=qa_llm, prompt=PROMPT), verbose=True
 )
 
+
 output = chain.run("Who played in Top Gun?")
 
 print(output)

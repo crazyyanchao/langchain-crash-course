@@ -38,6 +38,7 @@ print(graph.get_schema)
 # 跟踪调用记录
 llm = PromptLayerChatOpenAI(pl_tags=["neo4j"], temperature=0)
 
+# 使用自定义的QA_CHAIN
 # qa_llm = MossLLM(temperature=0.001)
 qa_llm = ChatGLMLLM(temperature=0.001)
 
@@ -48,3 +49,22 @@ chain = GraphCypherQAChain.from_llm(
 output = chain.run("Who played in Top Gun?")
 
 print(output)
+
+#         Node properties are the following:
+#         [{'properties': [{'property': 'name', 'type': 'STRING'}], 'labels': 'Movie'}, {'properties': [{'property': 'name', 'type': 'STRING'}], 'labels': 'Actor'}]
+#         Relationship properties are the following:
+#         []
+#         The relationships are the following:
+#         ['(:Actor)-[:ACTED_IN]->(:Movie)']
+#
+#
+#
+# > Entering new GraphCypherQAChain chain...
+# Generated Cypher:
+# MATCH (a:Actor)-[:ACTED_IN]->(m:Movie {name: 'Top Gun'})
+# RETURN a.name
+# Full Context:
+# [{'a.name': 'Meg Ryan'}, {'a.name': 'Val Kilmer'}, {'a.name': 'Tom Cruise'}, {'a.name': 'Anthony Edwards'}]
+#
+# > Finished chain.
+# Tom Cruise, Val Kilmer, and Meg Ryan all played characters in the film Topgun.

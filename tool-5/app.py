@@ -1,9 +1,11 @@
+import os
+
 from util.keys import initial
 
 # 初始化秘钥配置
 initial()
 
-from langchain.chat_models import ChatOpenAI
+# from langchain.chat_models import ChatOpenAI
 from langchain.chat_models import PromptLayerChatOpenAI
 
 # from langchain.chains import GraphCypherQAChain
@@ -15,13 +17,15 @@ from neo4j_graph import Neo4jGraph
 # pip install neo4j-driver==1.7.6
 # neo4j-3.5.22
 graph = Neo4jGraph(
-    url="bolt://localhost:7687", username="neo4j", password="123456"
+    url=os.environ.get("NEO4J_URL"),
+    username=os.environ.get("NEO4J_USER"),
+    password=os.environ.get("NEO4J_PWD")
 )
 
 # pip install neo4j-driver==5.8.0
 # neo4j-5.8.0
 # graph = Neo4jGraph(
-#     url="neo4j+s://c33fb403.databases.neo4j.io", username="neo4j", password="_GHXOEmNyysoATp2yR6wxXDgpBrg9x2VSXyyWcUHNiI"
+#     url="neo4j+s://c33fb403.databases.neo4j.io", username="neo4j", password=os.environ.get("NEO4J_PWD")
 # )
 
 # 创建一些样例数据

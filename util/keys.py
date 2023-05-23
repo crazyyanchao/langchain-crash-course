@@ -19,3 +19,9 @@ def initial(env='../.env'):
 
     # HuggingFace: https://huggingface.co/settings/tokens
     os.environ["HUGGINGFACEHUB_API_TOKEN"] = getEnv('HUGGINGFACEHUB_TOKEN', env)
+
+    os.environ["CHATGLM_API"] = getEnv('CHATGLM_API', env)
+    os.environ["MOSS_API"] = getEnv('MOSS_API', env)
+    os.environ["NEO4J_URL"] = getEnv('NEO4J_URL', env)
+    os.environ["NEO4J_USER"] = getEnv('NEO4J_USER', env)
+    os.environ["NEO4J_PWD"] = getEnv('NEO4J_PWD', env)

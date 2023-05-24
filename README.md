@@ -15,6 +15,7 @@ Build an LangChain app in few minutes! | 快速构建 LangChain 应用程序
 - [闲聊机器人](tool-4)
 - [支持查询Neo4j](tool-5)
 - [自定义QA_CHAIN查询Neo4j](tool-6)
+- [使用Chroma配置示例选择器并自定义PROMPT查询Neo4j](tool-7)
 
 ## 测试
 - [接口测试](others)

@@ -1,61 +1,70 @@
-import datetime
 import os
+import requests
+import datetime
 from typing import List
 
-from util.keys import initial
-
-# 初始化秘钥配置
-initial('../../.env')
-
-import requests
+PROMPTLAYER_API = "https://api.promptlayer.com/rest/track-request"
 
 
-def publish_prompt_template(
-        user_prompt: str,
-        tags: List,
-        assistant_output: str
-):
-    request_response = requests.post(
-        "https://api.promptlayer.com/rest/track-request",
-        json={
-            "function_name": "langchain.PromptLayerChatOpenAI",
-            "provider_type": "langchain",
-            "args":
-                [
+def count_tokens(text):
+    word_count = len(text)
+    return word_count
+
+
+class Promptlayer:
+
+    @staticmethod
+    def track_request(
+            model_name: str,
+            user_prompt: str,
+            tags: List,
+            assistant_output: str,
+            temperature: float
+    ):
+        request_response = requests.post(
+            PROMPTLAYER_API,
+            json={
+                "function_name": "langchain.PromptLayerChatOpenAI",
+                "provider_type": "langchain",
+                "args":
+                    [
+                        {
+                            "role": "user",
+                            "content": user_prompt
+                        }
+                    ],
+                "kwargs":
                     {
-                        "role": "user",
-                        "content": user_prompt
-                    }
-                ],
-            "kwargs":
-                {
-                    "model": "llm",
-                    "request_timeout": "None",
-                    "max_tokens": "None",
-                    "stream": "False",
-                    "n": 1,
-                    "temperature": 0.0
-                },
-            "tags": tags,
-            "request_response":
-                [
-                    {
-                        "role": "assistant",
-                        "content": assistant_output
-                    }
-                ],
-            "request_start_time": datetime.datetime.now().timestamp(),
-            "request_end_time": datetime.datetime.now().timestamp(),
-            "api_key": os.environ.get("PROMPTLAYER_API_KEY")
-        },
-    )
+                        "model": model_name,
+                        "request_timeout": "None",
+                        "max_tokens": count_tokens(user_prompt),
+                        "stream": "False",
+                        "n": 1,
+                        "temperature": temperature
+                    },
+                "tags": tags,
+                "request_response":
+                    [
+                        {
+                            "role": "assistant",
+                            "content": assistant_output
+                        }
+                    ],
+                "request_start_time": datetime.datetime.now().timestamp(),
+                "request_end_time": datetime.datetime.now().timestamp(),
+                "api_key": os.environ.get("PROMPTLAYER_API_KEY")
+            },
+        )
 
-    print(request_response.json())
+        return request_response
 
 
 if __name__ == '__main__':
-    publish_prompt_template(
+    promptlayer = Promptlayer()
+    promptlayer.track_request(
+        model_name="llm",
         user_prompt="test",
         tags=["test"],
-        assistant_output="test"
+        assistant_output="test",
+        temperature=0.001
     )

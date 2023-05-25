@@ -4,7 +4,8 @@ from util.keys import initial
 initial('../../.env')
 
 import os
-import requests
+import aiohttp
+import asyncio
 import datetime
 from typing import List
 
@@ -18,17 +19,16 @@ def count_tokens(text):
 
 class Promptlayer:
 
-    @staticmethod
-    def track_request(
+    async def track_request(
+            self,
             model_name: str,
             user_prompt: str,
             tags: List,
             assistant_output: str,
             temperature: float
     ):
-        request_response = requests.post(
-            PROMPTLAYER_API,
-            json={
+        async with aiohttp.ClientSession() as session:
+            async with session.post(PROMPTLAYER_API, json={
                 "function_name": "langchain.PromptLayerChatOpenAI",
                 "provider_type": "langchain",
                 "args":
@@ -58,18 +58,35 @@ class Promptlayer:
                 "request_start_time": datetime.datetime.now().timestamp(),
                 "request_end_time": datetime.datetime.now().timestamp(),
                 "api_key": os.environ.get("PROMPTLAYER_API_KEY")
-            },
-        )
+            }) as response:
+                request_response = await response.json()
 
         return request_response
 
 
-if __name__ == '__main__':
+async def main(model_name: str,
+               user_prompt: str,
+               tags: List,
+               assistant_output: str,
+               temperature: float):
     promptlayer = Promptlayer()
-    promptlayer.track_request(
-        model_name="llm",
-        user_prompt="test",
-        tags=["test"],
-        assistant_output="test",
-        temperature=0.001
+
+    result = await promptlayer.track_request(
+        model_name=model_name,
+        user_prompt=user_prompt,
+        tags=tags,
+        assistant_output=assistant_output,
+        temperature=temperature
     )
+
+    return result
+
+
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main(model_name="llm",
+                                 user_prompt="test",
+                                 tags=["test"],
+                                 assistant_output="test",
+                                 temperature=0.001)
+                            )

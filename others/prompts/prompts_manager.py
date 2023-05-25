@@ -15,7 +15,6 @@ def publish_prompt_template(
         tags: List,
         assistant_output: str
 ):
-    tags.append("customllm")
     request_response = requests.post(
         "https://api.promptlayer.com/rest/track-request",
         json={

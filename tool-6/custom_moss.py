@@ -23,7 +23,7 @@ class MossLLM(LLM):
     ) -> str:
         if stop is not None:
             raise ValueError("stop kwargs are not permitted.")
-        return self.moss_api(prompt, self.temperature)
+        return self.api(prompt, self.temperature)
 
     @property
     def _identifying_params(self) -> Mapping[str, Any]:
@@ -31,7 +31,7 @@ class MossLLM(LLM):
         return {"type": self.type}
 
     @staticmethod
-    def moss_api(prompt, temperature):
+    def api(prompt, temperature):
         headers = {"Content-type": "application/json"}
         url = MOSS_API
         data = {

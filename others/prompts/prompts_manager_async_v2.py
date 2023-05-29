@@ -64,18 +64,29 @@ class Promptlayer:
         return request_response
 
 
-if __name__ == '__main__':
+async def main(model_name: str,
+               user_prompt: str,
+               tags: List,
+               assistant_output: str,
+               temperature: float):
     promptlayer = Promptlayer()
 
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    result = loop.run_until_complete(promptlayer.track_request(
-        model_name="llm",
-        user_prompt="test",
-        tags=["async"],
-        assistant_output="test",
-        temperature=0.001
-    ))
-    loop.close()
+    result = await promptlayer.track_request(
+        model_name=model_name,
+        user_prompt=user_prompt,
+        tags=tags,
+        assistant_output=assistant_output,
+        temperature=temperature
+    )
 
-    print(result)
+    return result
+
+
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main(model_name="llm",
+                                 user_prompt="test",
+                                 tags=["test"],
+                                 assistant_output="test",
+                                 temperature=0.001)
+                            )

@@ -10,7 +10,7 @@ initial()
 
 from langchain import OpenAI, LLMChain, PromptTemplate
 from langchain.memory import ConversationBufferWindowMemory
-
+from langchain.chat_models import PromptLayerChatOpenAI
 
 template = """Assistant is a large language model trained by OpenAI.
 
@@ -31,7 +31,7 @@ prompt = PromptTemplate(
 
 
 chatgpt_chain = LLMChain(
-    llm=OpenAI(temperature=0),
+    llm=PromptLayerChatOpenAI(temperature=0),
     prompt=prompt,
     verbose=True,
     memory=ConversationBufferWindowMemory(k=2),
